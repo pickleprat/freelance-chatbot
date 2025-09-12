@@ -7,9 +7,12 @@ class NeonProvider:
 
     @classmethod
     def get_connection(cls):
-        if cls._conn is None or cls._conn.closed:
-            cls._conn = psycopg2.connect(
-                Config.NEON_CONNECTION_STRING,
-                cursor_factory=RealDictCursor
-            )
-        return cls._conn
+        try: 
+            if cls._conn is None or cls._conn.closed:
+                cls._conn = psycopg2.connect(
+                    Config.NEON_CONNECTION_STRING,
+                    cursor_factory=RealDictCursor
+                )
+            return cls._conn
+        except Exception as err: 
+            return None
