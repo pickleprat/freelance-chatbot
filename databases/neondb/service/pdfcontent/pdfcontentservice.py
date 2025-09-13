@@ -1,7 +1,7 @@
-from ...provider import NeonProvider
-from ...querymap import QueryMap
-from ...sql.loader import load_sql
-from .model import PdfContent
+from databases.neondb.provider import NeonProvider
+from databases.neondb.querymap import QueryMap
+from databases.neondb.sql.loader import load_sql
+from databases.neondb.service.pdfcontent.model import PdfContent
 
 class PDFContentService:
     def __init__(self):

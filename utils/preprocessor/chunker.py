@@ -10,11 +10,14 @@ except OSError:
     nlp = None
 
 @dataclass
-class Chunk:
-    """Represents a chunk of company information with rich metadata"""
-    content: str
+class Chunk: 
+    chunk_text: str
     chunk_id: str
     chunk_id_marker: str
+    
+@dataclass
+class EnrichedChunk(Chunk):
+    """Represents a chunk of company information with rich metadata"""
     document_type: str
     department: str = None
     location: str = None
@@ -267,7 +270,7 @@ class DocumentChunker:
                       content: str, 
                       chunk_id_marker: str,
                       document_type: str = None,
-                      metadata: dict[str, any] = None) -> list[Chunk]:
+                      metadata: dict[str, any] = None) -> list[EnrichedChunk]:
         """Main chunking method that creates contextual chunks with rich metadata"""
         
         if not content.strip():
@@ -298,7 +301,7 @@ class DocumentChunker:
             # Infer metadata
             inferred_dept = self.infer_department(chunk_content, chunk_entities)
             
-            chunk = Chunk(
+            chunk = EnrichedChunk(
                 content=chunk_content,
                 chunk_id=f"{chunk_id_marker}_{i}",
                 chunk_id_marker=chunk_id_marker,
@@ -321,10 +324,10 @@ class DocumentChunker:
         
         return chunks
     
-    def chunk_to_dict(self, chunk: Chunk) -> dict[str, any]:
+    def chunk_to_dict(self, chunk: EnrichedChunk) -> dict[str, any]:
         """Convert chunk to dictionary for storage"""
         return asdict(chunk)
     
-    def chunk_from_dict(self, chunk_dict: dict[str, any]) -> Chunk:
-        """Convert dictionary back to Chunk"""
-        return Chunk(**chunk_dict)
+    def chunk_from_dict(self, chunk_dict: dict[str, any]) -> EnrichedChunk:
+        """Convert dictionary back to Enriched Chunk"""
+        return EnrichedChunk(**chunk_dict)
