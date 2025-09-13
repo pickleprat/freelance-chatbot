@@ -8,5 +8,6 @@ class Config:
     PINECONE_SERVERLESS_KEY : str = os.getenv("PINECONE_API_KEY")
     GEMINI_API_KEY          : str = os.getenv("GEMINI_API_KEY")
     NAMESPACE               : str = os.getenv("NAMESPACE")
+    INDEX_NAME              : str = os.getenv("INDEX_NAME")
 
 
